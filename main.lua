@@ -1,3 +1,4 @@
+-- Gyakorlatilag import
 local love = require "love"
 local button = require "Button"
 --Minden globálisan érvényes érték itt legyen kezelve
