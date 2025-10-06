@@ -65,6 +65,7 @@ local font = {
 
 function love.load()
     love.window.setFullscreen(true)
+    background = love.graphics.newImage("medievalBG.jpg")
     love.window.setTitle("CS2 Nagy Projekt")
     buttons.menu.play = button("Start", nil, nil, 150, 40)
     buttons.menu.continue = button("Continue", nil, nil, 150, 40)
@@ -77,15 +78,21 @@ function love.update(dt)
 end
 
 function love.draw()
+
     local screenWidth = love.graphics.getWidth()
     local screenHeight = love.graphics.getHeight()
     if game.state["menu"] then
+         if background then
+            love.graphics.draw(background, 0, 0, 0, love.graphics.getWidth()/background:getWidth(), love.graphics.getHeight()/background:getHeight())
+        else
+            love.graphics.clear(0.8, 0.7, 0.6)
+        end
         love.graphics.printf("Játék címe",font.cim.font,0,100,love.graphics.getWidth(), "center")
         love.graphics.setFont(font.gomb.font)
-        buttons.menu.play:draw(screenWidth/2 - buttons.menu.play.width/2, 200, 10, 10)
-        buttons.menu.continue:draw(screenWidth/2 - buttons.menu.continue.width/2, 270, 10, 10)
-        buttons.menu.setting:draw(screenWidth/2 - buttons.menu.setting.width/2, 340, 10, 10)
-        buttons.menu.exit:draw(screenWidth - buttons.menu.exit.width - 20, screenHeight - buttons.menu.exit.height - 20, 10, 10)
+        buttons.menu.play:texturedDraw(screenWidth/2 - buttons.menu.play.width/2, 200, 10, 10)
+        buttons.menu.continue:texturedDraw(screenWidth/2 - buttons.menu.continue.width/2, 270, 10, 10)
+        buttons.menu.setting:texturedDraw(screenWidth/2 - buttons.menu.setting.width/2, 340, 10, 10)
+        buttons.menu.exit:texturedDraw(screenWidth - buttons.menu.exit.width - 20, screenHeight - buttons.menu.exit.height - 20, 10, 10)
 
         love.graphics.setFont(font.kozep.font)
     end

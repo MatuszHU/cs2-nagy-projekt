@@ -52,7 +52,28 @@ function Button(text, func, func_param, width, height)
             love.graphics.print(self.text, self.text_x, self.text_y)
             
             love.graphics.setColor(1,1,1,1)
+        end,
+
+        texturedDraw = function(self, button_x, button_y, text_x, text_y)
+            self.button_x = button_x or self.button_x
+            self.button_y = button_y or self.button_y
+
+            love.graphics.setColor(0.97, 0.89, 0.64, 1)
+            love.graphics.rectangle("fill", self.button_x, self.button_y, self.width, self.height, 18, 18)
+            love.graphics.setColor(0.77, 0.61, 0.19, 1) 
+            love.graphics.setLineWidth(4)
+            love.graphics.rectangle("line", self.button_x, self.button_y, self.width, self.height, 18, 18)
+    
+            love.graphics.setColor(0.3, 0.2, 0.1, 0.25)
+            love.graphics.rectangle("fill", self.button_x+6, self.button_y+6, self.width, self.height, 18, 18)
+    
+            love.graphics.setColor(0.3,0.2,0.15,1)
+            local tw = love.graphics.getFont():getWidth(self.text)
+            local th = love.graphics.getFont():getHeight()
+            love.graphics.print(self.text, self.button_x + (self.width-tw)/2, self.button_y + (self.height-th)/2)
+            love.graphics.setColor(1,1,1,1)
         end
+
     }
 end
 
