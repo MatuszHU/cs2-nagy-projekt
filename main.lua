@@ -50,7 +50,7 @@ local font = {
         size = 16
     },
     gomb = {
-        font = love.graphics.newFont(24),
+        font = love.graphics.newFont("medieval.ttf",24),
         size = 24
     },
     nagy = {
@@ -58,7 +58,7 @@ local font = {
         size = 30
     },
     cim = {
-        font = love.graphics.newFont(60),
+        font = love.graphics.newFont("medieval.ttf",60),
         size = 60
     }
 }
@@ -66,6 +66,8 @@ local font = {
 function love.load()
     love.window.setFullscreen(true)
     background = love.graphics.newImage("medievalBG.jpg")
+    
+
     love.window.setTitle("CS2 Nagy Projekt")
     buttons.menu.play = button("Start", nil, nil, 150, 40)
     buttons.menu.continue = button("Continue", nil, nil, 150, 40)
