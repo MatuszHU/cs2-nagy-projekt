@@ -1,5 +1,6 @@
 local love = require "love"
 local button = require "Button"
+local settingsView = require "SettingsView"
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok
@@ -66,12 +67,11 @@ local font = {
 function love.load()
     love.window.setFullscreen(true)
     background = love.graphics.newImage("medievalBG.jpg")
-    
-
+    settings = settingsView()
     love.window.setTitle("CS2 Nagy Projekt")
     buttons.menu.play = button("Start", nil, nil, 150, 40)
     buttons.menu.continue = button("Continue", nil, nil, 150, 40)
-    buttons.menu.setting = button("Settings",nil, nil, 150, 40)
+    buttons.menu.setting = button("Settings", settings:open(), nil, 150, 40)
     buttons.menu.exit = button("Exit",love.event.quit, nil, 100, 40)
 end
 
@@ -97,7 +97,10 @@ function love.draw()
         buttons.menu.exit:texturedDraw(screenWidth - buttons.menu.exit.width - 20, screenHeight - buttons.menu.exit.height - 20, 10, 10)
 
         love.graphics.setFont(font.kozep.font)
+        settings:draw(30,30)
+        
     end
+        
 --debug
 love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS(), font.kis.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
 end
