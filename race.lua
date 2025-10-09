@@ -32,7 +32,6 @@ return {
     goblin = {
         name = "Goblin",
         stats = {
-            
             attack = 3,
             defense = 4,
             magic = 7,
@@ -47,7 +46,7 @@ return {
     },
     human = {
         name = "Human",
-        stats = {  
+        stats = {
             attack = 10,
             defense = 10,
             magic = 2,

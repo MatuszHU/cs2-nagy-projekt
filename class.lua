@@ -1,6 +1,6 @@
 return {
     knight = {
-        name = "knight",
+        name = "Knight",
         stats = {
             attack = 7,
             defense = 2,
@@ -9,7 +9,7 @@ return {
         }
     },
     cavalry = {
-        name = "cavalry",
+        name = "Cavalry",
         stats = {
             attack = 3,
             defense = 7,
@@ -20,7 +20,7 @@ return {
         }
     },
     wizard = {
-        name = "wizard",
+        name = "Wizard",
         stats = {
             magic = 6,
             resistance = 3,
@@ -28,7 +28,7 @@ return {
         }
     },
     priest = {
-        name = "priest",
+        name = "Priest",
         stats = {
             defense = 5,
             magic = 1,
@@ -40,7 +40,7 @@ return {
         }
     },
     thief = {
-        name = "thief",
+        name = "Thief",
         stats = {
             luck = 10,
             fow = 2,
