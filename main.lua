@@ -1,6 +1,7 @@
 -- Gyakorlatilag import
 local love = require "love"
 local button = require "Button"
+local character = require "character"
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok
@@ -10,6 +11,8 @@ local game = {
         running = false,
     }
 }
+
+local hero = createCharater("En","orc","knight")
 
 local buttons = {
     menu = {}
