@@ -12,12 +12,15 @@ function SettingView()
         pos_x = 0,
         pos_y = 0,
 
-        height = 1000,
-        width = 500,
+        width = love.graphics.getWidth()/3,
+        height = love.graphics.getHeight()/(3*4),
 
         titleText = "Beállítások",
 
         displayed = false,
+        
+        
+        cornerInfoDisplayed = false,
         
         --Menu buttons
         buttons = {
@@ -38,7 +41,14 @@ function SettingView()
                 love.window.setMode(1000, 600, {fullscreen = true, borderless = true, centered = true})
             end
         end,
-    
+        changeCornerInfoDisplay = function (self)
+            if self.cornerInfoDisplayed then
+                self.cornerInfoDisplayed = false
+            else
+                self.cornerInfoDisplayed = true
+            end
+
+        end,
         changeDisplay = function(self)
             if self.displayed then
                 self.displayed =  false
@@ -52,12 +62,14 @@ function SettingView()
             self.buttons.windowMode["fullscreen"] = button("Fullscreen",function() self:changeWindowMode("fullscreen") end, nil, 150, 50)
             self.buttons.windowMode["windowed"] = button("Windowed", function() self:changeWindowMode("windowed") end, nil, 150, 50)
             self.buttons.windowMode["borderless"] = button("Borderless",function() self:changeWindowMode("borderless") end, nil, 150, 50)
+            self.buttons.devSettings["cornerInfo"] = button("Corner Info Toggle", function() self:changeCornerInfoDisplay() end, nil, 200, 50)
         end,
 
         draw = function(self, pos_x, pos_y) 
             self.pos_x = pos_x or self.pos_x
             self.pos_y = pos_y or self.pos_y
-
+            self.width = love.graphics.getWidth()/3
+            self.height = love.graphics.getHeight()*(3/4)
             love.graphics.setColor(0.97, 0.89, 0.64, 1)
             love.graphics.rectangle("fill", self.pos_x, self.pos_y, self.width, self.height, 18, 18)
             love.graphics.setColor(0.77, 0.61, 0.19, 1) 
@@ -71,7 +83,7 @@ function SettingView()
             self.buttons.windowMode["fullscreen"]:texturedDraw(50,75)
             self.buttons.windowMode["windowed"]:texturedDraw(50,150)
             self.buttons.windowMode["borderless"]:texturedDraw(50,225)
-
+            self.buttons.devSettings["cornerInfo"]:texturedDraw(50, 300)
             love.graphics.setColor(1, 1, 1, 1)
 
             

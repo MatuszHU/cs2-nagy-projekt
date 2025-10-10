@@ -10,7 +10,7 @@ local game = {
         running = false,
     }
 }
-
+local settings = settingsView()
 local buttons = {
     menu = {}
 }
@@ -72,7 +72,7 @@ local font = {
 function love.load()
     love.window.setFullscreen(true)
     background = love.graphics.newImage("medievalBG.jpg")
-    settings = settingsView()
+    --settings = settingsView()
    
     love.window.setTitle("CS2 Nagy Projekt")
     buttons.menu.play = button("Start", nil, nil, 150, 40)
@@ -112,5 +112,7 @@ function love.draw()
     end
         
 --debug
-love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()), font.kozep.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
+    if settings.cornerInfoDisplayed then
+        love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()), font.kozep.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
+    end
 end
