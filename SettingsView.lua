@@ -68,7 +68,7 @@ function SettingView()
         draw = function(self, pos_x, pos_y) 
             self.pos_x = pos_x or self.pos_x
             self.pos_y = pos_y or self.pos_y
-            self.width = love.graphics.getWidth()/3
+            self.width = love.graphics.getWidth()*(1/3)
             self.height = love.graphics.getHeight()*(3/4)
             love.graphics.setColor(0.97, 0.89, 0.64, 1)
             love.graphics.rectangle("fill", self.pos_x, self.pos_y, self.width, self.height, 18, 18)
