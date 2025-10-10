@@ -1,6 +1,7 @@
 local love = require "love"
 local button = require "Button"
 local settingsView = require "SettingsView"
+
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok

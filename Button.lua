@@ -1,10 +1,11 @@
 local love = require "love"
+local buttonEnum = require "enums/buttonEnum"
 
 function Button(text, func, func_param, width, height)
     
     return {
-        width = width or 100,
-        height = height or 100,
+        width = width or buttonEnum.DEFAULT_WIDTH,
+        height = height or buttonEnum.DEFAULT_HEIGHT,
         func = func or function()
             print("-Nincs hozzárendelt funkció-")
         end,
