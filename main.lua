@@ -71,7 +71,7 @@ function love.load()
     love.window.setTitle("CS2 Nagy Projekt")
     buttons.menu.play = button("Start", nil, nil, 150, 40)
     buttons.menu.continue = button("Continue", nil, nil, 150, 40)
-    buttons.menu.setting = button("Settings", settings:open(), nil, 150, 40)
+    buttons.menu.setting = button("Settings", function() settings:changeDisplay() end, nil, 150, 40)
     buttons.menu.exit = button("Exit",love.event.quit, nil, 100, 40)
 end
 
@@ -91,16 +91,19 @@ function love.draw()
         end
         love.graphics.printf("Játék címe",font.cim.font,0,100,love.graphics.getWidth(), "center")
         love.graphics.setFont(font.gomb.font)
-        buttons.menu.play:texturedDraw(screenWidth/2 - buttons.menu.play.width/2, 200, 10, 10)
-        buttons.menu.continue:texturedDraw(screenWidth/2 - buttons.menu.continue.width/2, 270, 10, 10)
-        buttons.menu.setting:texturedDraw(screenWidth/2 - buttons.menu.setting.width/2, 340, 10, 10)
-        buttons.menu.exit:texturedDraw(screenWidth - buttons.menu.exit.width - 20, screenHeight - buttons.menu.exit.height - 20, 10, 10)
+        buttons.menu.play:texturedDraw(screenWidth/2 - buttons.menu.play.width/2, 200)
+        buttons.menu.continue:texturedDraw(screenWidth/2 - buttons.menu.continue.width/2, 270)
+        buttons.menu.setting:texturedDraw(screenWidth/2 - buttons.menu.setting.width/2, 340)
+        buttons.menu.exit:texturedDraw(screenWidth - buttons.menu.exit.width - 20, screenHeight - buttons.menu.exit.height - 20)
 
         love.graphics.setFont(font.kozep.font)
-        settings:draw(30,30)
+        if settings.displayed then
+            settings:draw(30,30)
+        end
+        
         
     end
         
 --debug
-love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS(), font.kis.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
+love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed), font.kis.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
 end
