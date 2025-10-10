@@ -1,5 +1,11 @@
 local love = require "love"
-local button = require "Button"
+local Button = require "Button"
+local ui = require "util/ui"
+local ilm = require "enums/inLineMode"
+local button = require "enums/button"
+
+uiHandler = ui()
+
 function SettingView()
     return {
 
@@ -59,10 +65,10 @@ function SettingView()
         end,
 
         loadButtons = function (self)
-            self.buttons.windowMode["fullscreen"] = button("Fullscreen",function() self:changeWindowMode("fullscreen") end, nil, 150, 50)
-            self.buttons.windowMode["windowed"] = button("Windowed", function() self:changeWindowMode("windowed") end, nil, 150, 50)
-            self.buttons.windowMode["borderless"] = button("Borderless",function() self:changeWindowMode("borderless") end, nil, 150, 50)
-            self.buttons.devSettings["cornerInfo"] = button("Corner Info Toggle", function() self:changeCornerInfoDisplay() end, nil, 200, 50)
+            self.buttons.windowMode["fullscreen"] = Button("Fullscreen",function() self:changeWindowMode("fullscreen") end, nil, 150, 50)
+            self.buttons.windowMode["windowed"] = Button("Windowed", function() self:changeWindowMode("windowed") end, nil, 150, 50)
+            self.buttons.windowMode["borderless"] = Button("Borderless",function() self:changeWindowMode("borderless") end, nil, 150, 50)
+            self.buttons.devSettings["cornerInfo"] = Button("Corner Info Toggle", function() self:changeCornerInfoDisplay() end, nil, 200, 50)
         end,
 
         draw = function(self, pos_x, pos_y) 
@@ -80,9 +86,12 @@ function SettingView()
             local th = love.graphics.getFont():getHeight()
             love.graphics.print(self.titleText, self.pos_x + (self.width-tw)/2, self.pos_y + th)
 
-            self.buttons.windowMode["fullscreen"]:texturedDraw(50,75)
-            self.buttons.windowMode["windowed"]:texturedDraw(50,150)
-            self.buttons.windowMode["borderless"]:texturedDraw(50,225)
+            --self.buttons.windowMode["fullscreen"]:texturedDraw(50,75)
+            --self.buttons.windowMode["windowed"]:texturedDraw(50,150)
+            --self.buttons.windowMode["borderless"]:texturedDraw(50,225)
+
+            uiHandler:drawButtonsInLine(ilm.EQ_SP, 50, 75, love.graphics.getWidth()*(1/3)-50, button.DEFAULT_HEIGHT, self.buttons.windowMode["fullscreen"], self.buttons.windowMode["windowed"],self.buttons.windowMode["borderless"])
+
             self.buttons.devSettings["cornerInfo"]:texturedDraw(50, 300)
             love.graphics.setColor(1, 1, 1, 1)
 
