@@ -86,11 +86,7 @@ function SettingView()
             local th = love.graphics.getFont():getHeight()
             love.graphics.print(self.titleText, self.pos_x + (self.width-tw)/2, self.pos_y + th)
 
-            --self.buttons.windowMode["fullscreen"]:texturedDraw(50,75)
-            --self.buttons.windowMode["windowed"]:texturedDraw(50,150)
-            --self.buttons.windowMode["borderless"]:texturedDraw(50,225)
-
-            uiHandler:drawButtonsInLine(ilm.EQ_SP, 50, 75, love.graphics.getWidth()*(1/3)-50, button.DEFAULT_HEIGHT, self.buttons.windowMode["fullscreen"], self.buttons.windowMode["windowed"],self.buttons.windowMode["borderless"])
+            uiHandler:drawButtonsInLine(ilm.EQ_SP, 50, 125, love.graphics.getWidth()*(1/3)-50, button.DEFAULT_HEIGHT, self.buttons.windowMode["fullscreen"], self.buttons.windowMode["windowed"],self.buttons.windowMode["borderless"])
 
             self.buttons.devSettings["cornerInfo"]:texturedDraw(50, 300)
             love.graphics.setColor(1, 1, 1, 1)

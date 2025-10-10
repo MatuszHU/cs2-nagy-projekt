@@ -2,6 +2,7 @@
 local love = require "love"
 local button = require "Button"
 local settingsView = require "SettingsView"
+local font = require "util/fonts"
 
 local character = require "character"
 --Minden globálisan érvényes érték itt legyen kezelve
@@ -52,32 +53,10 @@ function love.mousepressed(x,y,button,touch,presses)
     end
 end
 
-local font = {
-    kis = {
-        font = love.graphics.newFont(8),
-        size = 8
-    },
-    kozep = {
-        font = love.graphics.newFont(16),
-        size = 16
-    },
-    gomb = {
-        font = love.graphics.newFont("medieval.ttf",24),
-        size = 24
-    },
-    nagy = {
-        font = love.graphics.newFont(30),
-        size = 30
-    },
-    cim = {
-        font = love.graphics.newFont("medieval.ttf",60),
-        size = 60
-    }
-}
 
 function love.load()
     love.window.setFullscreen(true)
-    background = love.graphics.newImage("medievalBG.jpg")
+    background = love.graphics.newImage("assets/backgrounds/medievalBG.jpg")
     --settings = settingsView()
    
     love.window.setTitle("CS2 Nagy Projekt")
@@ -102,14 +81,14 @@ function love.draw()
         else
             love.graphics.clear(0.8, 0.7, 0.6)
         end
-        love.graphics.printf("Játék címe",font.cim.font,0,100,love.graphics.getWidth(), "center")
-        love.graphics.setFont(font.gomb.font)
+        love.graphics.printf("Játék címe",font.title.font,0,100,love.graphics.getWidth(), "center")
+        love.graphics.setFont(font.button.font)
         buttons.menu.play:texturedDraw(screenWidth/2 - buttons.menu.play.width/2, 200)
         buttons.menu.continue:texturedDraw(screenWidth/2 - buttons.menu.continue.width/2, 270)
         buttons.menu.setting:texturedDraw(screenWidth/2 - buttons.menu.setting.width/2, 340)
         buttons.menu.exit:texturedDraw(screenWidth - buttons.menu.exit.width - 20, screenHeight - buttons.menu.exit.height - 20)
 
-        love.graphics.setFont(font.kozep.font)
+        love.graphics.setFont(font.button.font)
         if settings.displayed then
             settings:draw(30,30)
         end
@@ -119,6 +98,6 @@ function love.draw()
         
 --debug
     if settings.cornerInfoDisplayed then
-        love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()), font.kozep.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
+        love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()), font.medium.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
     end
 end
