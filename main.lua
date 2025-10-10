@@ -26,6 +26,11 @@ local mouse = {
 }
 
 function love.mousepressed(x,y,button,touch,presses)
+    if settings.displayed then
+        for k, btn in pairs(settings.buttons.windowMode) do
+            btn:pressed(x, y, mouse.radius)
+        end
+    end
     if not game.state['running'] then
         if button == 1 then
             if game.state["menu"] then
@@ -68,11 +73,13 @@ function love.load()
     love.window.setFullscreen(true)
     background = love.graphics.newImage("medievalBG.jpg")
     settings = settingsView()
+   
     love.window.setTitle("CS2 Nagy Projekt")
     buttons.menu.play = button("Start", nil, nil, 150, 40)
     buttons.menu.continue = button("Continue", nil, nil, 150, 40)
     buttons.menu.setting = button("Settings", function() settings:changeDisplay() end, nil, 150, 40)
     buttons.menu.exit = button("Exit",love.event.quit, nil, 100, 40)
+    settings:loadButtons()
 end
 
 function love.update(dt)
@@ -105,5 +112,5 @@ function love.draw()
     end
         
 --debug
-love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed), font.kis.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
+love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()), font.kozep.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
 end
