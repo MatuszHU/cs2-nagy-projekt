@@ -10,12 +10,14 @@ A harcrendszser körökre osztott. Minden csatát a játékos kezd, tehát az el
     - támadás
     - tárgy használata
     - tárgy átadása más karakternek
-    - Overwatch (ha egy ellenség belép az támadási zónájában akkor megtámadja.)
+    - Őködés (ha egy ellenség belép az támadási zónájában akkor megtámadja.)
 
 4. A karakter elfárad. Kör vége. Játékos váltás.
 
 ## Alap harc mechanikák
 
+- Támadó ATK = karakter ATK + fegyver ATK
+- Védekező DEF = karakter DEF + item DEf a karakteren
 - Sebzés számolás: Támadó ATK - Védekező DEF
 - Kritikus sebzés számolása: (Támadó ATK - Védekező DEF) X 2
 - MAG sebzés esetén a képletek ugyan azok, csak a támadó MAG és a védekező RES-ét használva
