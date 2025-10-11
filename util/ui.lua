@@ -37,7 +37,7 @@ function ui()
             for i = 1, #buttons do
                 buttons[i]:texturedDraw(buttons[i].button_x, start_y)
             end
-        end
+        end,
     }
 end
 
