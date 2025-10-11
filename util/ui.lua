@@ -23,9 +23,6 @@ function ui()
                 gapWidth = 10
             end
 
-            --if (button.DEFAULT_WIDTH * #buttons)+gapWidth > maxWidth then
-            --    self:drawButtonsInLine(mode,start_x,start_y, maxWidth, height, buttons)
-            --end
 
 
             for i = 1, #buttons-1 do
