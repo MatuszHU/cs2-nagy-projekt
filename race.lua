@@ -2,6 +2,7 @@ return {
     orc = {
         name = "Orc",
         stats = {
+            hp = 22,
             attack = 25,
             defense = 20,
             magic = 4,
@@ -17,6 +18,7 @@ return {
     elf = {
         name = "Elf",
         stats = {
+            hp = 12,
             attack = 10,
             defense = 12,
             magic = 10,
@@ -32,6 +34,7 @@ return {
     goblin = {
         name = "Goblin",
         stats = {
+            hp = 5,
             attack = 3,
             defense = 4,
             magic = 7,
@@ -47,6 +50,7 @@ return {
     human = {
         name = "Human",
         stats = {
+            hp = 10,
             attack = 10,
             defense = 10,
             magic = 2,
@@ -62,6 +66,7 @@ return {
     dwarf = {
         name = "Dwarf",
         stats = {
+            hp = 15,
             attack = 25,
             defense = 12,
             magic = 1,
