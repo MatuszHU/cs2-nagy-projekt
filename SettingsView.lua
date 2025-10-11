@@ -26,7 +26,7 @@ function SettingView()
         displayed = false,
         
         
-        cornerInfoDisplayed = false,
+        cornerInfoDisplayed = true,
         
         --Menu buttons
         buttons = {
@@ -88,7 +88,7 @@ function SettingView()
 
             uiHandler:drawButtonsInLine(ilm.EQ_SP, 50, 125, love.graphics.getWidth()*(1/3)-50, button.DEFAULT_HEIGHT, self.buttons.windowMode["fullscreen"], self.buttons.windowMode["windowed"],self.buttons.windowMode["borderless"])
 
-            self.buttons.devSettings["cornerInfo"]:texturedDraw(50, 300)
+            self.buttons.devSettings["cornerInfo"]:texturedDraw(50, 275)
             love.graphics.setColor(1, 1, 1, 1)
 
             

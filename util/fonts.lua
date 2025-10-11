@@ -1,11 +1,11 @@
 font = {
     small = {
         font = love.graphics.newFont("medieval.ttf",10),
-        size = 8
+        size = 10
     },
     medium = {
         font = love.graphics.newFont("medieval.ttf",18),
-        size = 16
+        size = 18
     },
     button = {
         font = love.graphics.newFont("medieval.ttf",24),
@@ -18,6 +18,10 @@ font = {
     title = {
         font = love.graphics.newFont("medieval.ttf",60),
         size = 60
+    },
+    debug = {
+        font = love.graphics.newFont(18),
+        size = 18
     }
 }
 

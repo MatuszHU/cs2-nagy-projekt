@@ -1,6 +1,6 @@
 -- Gyakorlatilag import
 local love = require "love"
-local button = require "Button"
+local Button = require "Button"
 local settingsView = require "SettingsView"
 local font = require "util/fonts"
 
@@ -60,10 +60,10 @@ function love.load()
     --settings = settingsView()
    
     love.window.setTitle("CS2 Nagy Projekt")
-    buttons.menu.play = button("Start", nil, nil, 150, 40)
-    buttons.menu.continue = button("Continue", nil, nil, 150, 40)
-    buttons.menu.setting = button("Settings", function() settings:changeDisplay() end, nil, 150, 40)
-    buttons.menu.exit = button("Exit",love.event.quit, nil, 100, 40)
+    buttons.menu.play = Button("Start", nil, nil, 150, 40)
+    buttons.menu.continue = Button("Continue", nil, nil, 150, 40)
+    buttons.menu.setting = Button("Settings", function() settings:changeDisplay() end, nil, 150, 40)
+    buttons.menu.exit = Button("Exit",love.event.quit, nil, 100, 40)
     settings:loadButtons()
 end
 
@@ -98,6 +98,6 @@ function love.draw()
         
 --debug
     if settings.cornerInfoDisplayed then
-        love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()), font.medium.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
+        love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()).." cornerInfoDisplayed: "..tostring(settings.cornerInfoDisplayed), font.debug.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
     end
 end
