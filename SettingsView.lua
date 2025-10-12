@@ -68,9 +68,9 @@ function SettingView()
             self.buttons.windowMode["fullscreen"] = Button("Fullscreen",function() self:changeWindowMode("fullscreen") end, nil, 150, 50)
             self.buttons.windowMode["windowed"] = Button("Windowed", function() self:changeWindowMode("windowed") end, nil, 150, 50)
             self.buttons.windowMode["borderless"] = Button("Borderless",function() self:changeWindowMode("borderless") end, nil, 150, 50)
-            self.buttons.devSettings["cornerInfo"] = Button("Corner Info Toggle", function() self:changeCornerInfoDisplay() end, nil, 200, 50)
+            self.buttons.devSettings["cornerInfo"] = Button("Corner Info Toggle", function() self.changeCornerInfoDisplay(self) end, nil, 200, 50)
         end,
-
+        
         draw = function(self, pos_x, pos_y) 
             self.pos_x = pos_x or self.pos_x
             self.pos_y = pos_y or self.pos_y
@@ -86,9 +86,9 @@ function SettingView()
             local th = love.graphics.getFont():getHeight()
             love.graphics.print(self.titleText, self.pos_x + (self.width-tw)/2, self.pos_y + th)
 
-            uiHandler:drawButtonsInLine(ilm.EQ_SP, 50, 125, love.graphics.getWidth()*(1/3)-50, button.DEFAULT_HEIGHT, self.buttons.windowMode["fullscreen"], self.buttons.windowMode["windowed"],self.buttons.windowMode["borderless"])
+            local endOfWindow = uiHandler:drawButtonsInLine(ilm.EQ_SP, 50, 125, love.graphics.getWidth()*(1/3)-50, button.DEFAULT_HEIGHT, self.buttons.windowMode["fullscreen"], self.buttons.windowMode["windowed"],self.buttons.windowMode["borderless"])
 
-            self.buttons.devSettings["cornerInfo"]:texturedDraw(50, 275)
+            self.buttons.devSettings["cornerInfo"]:texturedDraw(50, endOfWindow+25)
             love.graphics.setColor(1, 1, 1, 1)
 
             

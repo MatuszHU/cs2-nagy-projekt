@@ -20,8 +20,8 @@ font = {
         size = 60
     },
     debug = {
-        font = love.graphics.newFont(18),
-        size = 18
+        font = love.graphics.newFont(20),
+        size = 20
     }
 }
 
