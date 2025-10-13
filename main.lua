@@ -3,13 +3,14 @@ local love = require "love"
 local Button = require "Button"
 local settingsView = require "SettingsView"
 local font = require "util/fonts"
-
+local StartGame = require "StartGame"
 local character = require "character"
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok
     state = {
-        menu = true,
+        startUp = true,
+        menu = false,
         paused = false,
         running = false,
     }
@@ -22,6 +23,7 @@ local buttons = {
     menu = {}
 }
 local function changeGameState(state)
+    game.state["startUp"] = state == "startUp"
     game.state["menu"] = state == "menu"
     game.state["paused"] = state == "paused"
     game.state["running"] = state == "running"
@@ -55,6 +57,7 @@ end
 
 
 function love.load()
+    StartGame.load()
     love.window.setFullscreen(true)
     background = love.graphics.newImage("assets/backgrounds/medievalBG.jpg")
     --settings = settingsView()
@@ -68,11 +71,19 @@ function love.load()
 end
 
 function love.update(dt)
+    if not StartGame.isDone() then
+        StartGame.update(dt)
+        if StartGame.isDone() then
+            changeGameState("menu")
+        end
+    end 
     mouse.x, mouse.y = love.mouse.getPosition()
 end
 
 function love.draw()
-
+    if game.state["startUp"] then
+        StartGame.draw()
+    end
     local screenWidth = love.graphics.getWidth()
     local screenHeight = love.graphics.getHeight()
     if game.state["menu"] then
