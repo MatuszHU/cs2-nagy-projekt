@@ -68,7 +68,7 @@ function SettingView()
             self.buttons.windowMode["fullscreen"] = Button("Fullscreen",function() self:changeWindowMode("fullscreen") end, nil, 150, 50)
             self.buttons.windowMode["windowed"] = Button("Windowed", function() self:changeWindowMode("windowed") end, nil, 150, 50)
             self.buttons.windowMode["borderless"] = Button("Borderless",function() self:changeWindowMode("borderless") end, nil, 150, 50)
-            self.buttons.devSettings["cornerInfo"] = Button("Corner Info Toggle", function() self.changeCornerInfoDisplay(self) end, nil, 200, 50)
+            self.buttons.devSettings["cornerInfo"] = Button("Corner Info Toggle", function() self:changeCornerInfoDisplay() end, nil, 200, 50)
         end,
         
         draw = function(self, pos_x, pos_y) 
