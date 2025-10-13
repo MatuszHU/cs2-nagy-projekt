@@ -40,7 +40,7 @@ function SettingView()
             self.windowState["borderless"] = state == "borderless"
 
             if self.windowState["fullscreen"] then
-                love.window.setMode(1000, 600, {fullscreen = false, borderless = false, centered = true})
+                love.window.setMode(1000, 600, {fullscreen = true, borderless = false, centered = true})
             elseif self.windowState["windowed"] then
                 love.window.setMode(1000, 600, {fullscreen = false, borderless = false, centered = true})
             else 
