@@ -2,9 +2,9 @@ local font = require "util/fonts"
 
 local StartGame = {}
 local timer = 0
-local holdTime = 1.2       
-local fadeInTime = 1       
-local fadeOutTime = 1      
+local holdTime = 1.2
+local fadeInTime = 1
+local fadeOutTime = 1
 local finished = false
 local soundEffect = love.audio.newSource("assets/audio/startup.mp3", "static")
 
