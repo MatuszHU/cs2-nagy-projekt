@@ -69,6 +69,7 @@ end
 
 function love.update(dt)
     mouse.x, mouse.y = love.mouse.getPosition()
+    
 end
 
 function love.draw()
@@ -93,11 +94,11 @@ function love.draw()
             settings:draw(30,30)
         end
         
-        
+        if settings.cornerInfoDisplayed then
+            love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()).." cornerInfoDisplayed: "..tostring(settings.cornerInfoDisplayed), font.debug.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
+        end
     end
         
 --debug
-    if settings.cornerInfoDisplayed then
-        love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()).." cornerInfoDisplayed: "..tostring(settings.cornerInfoDisplayed), font.debug.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
-    end
+    
 end

@@ -7,6 +7,7 @@ local button = require "enums/button"
 uiHandler = ui()
 
 function SettingView()
+    local cornerInfoDisplayed = false
     return {
 
         windowState = {
@@ -47,14 +48,17 @@ function SettingView()
                 love.window.setMode(1000, 600, {fullscreen = true, borderless = true, centered = true})
             end
         end,
+
         changeCornerInfoDisplay = function (self)
-            if self.cornerInfoDisplayed then
-                self.cornerInfoDisplayed = false
-            else
+            
+            if true ~= self.cornerInfoDisplayed then
                 self.cornerInfoDisplayed = true
+            else
+                self.cornerInfoDisplayed = false
             end
 
         end,
+
         changeDisplay = function(self)
             if self.displayed then
                 self.displayed =  false
