@@ -5,7 +5,7 @@ local settingsView = require "SettingsView"
 local font = require "util/fonts"
 local StartGame = require "StartGame"
 local character = require "character"
-local DifficultySelector = require "difficultySelectorView"
+local DifficultySelector = require "DifficultySelectorView"
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok

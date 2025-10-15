@@ -12,7 +12,7 @@ function ui()
             local maxWidth = displayWidth or love.graphics.getWidth()
             local height = b_height or button.DEFAULT_HEIGHT
             local width = b_width or button.DEFAULT_WIDTH
-            local gaps = #buttons - 1
+            local gaps = #buttons + 1
             local gapWidth = 10
             local vGap = 25
             local start_x = start_x or 0
@@ -20,10 +20,12 @@ function ui()
             
             if mode == ilm.EQ_SP then
                 gapWidth = (displayWidth - (#buttons * button.DEFAULT_WIDTH)) / gaps
+                
             else
                 gapWidth = 10
             end
             if (button.DEFAULT_WIDTH * #buttons)+gapWidth > maxWidth then
+                
                 for i = 1, #buttons-1 do
                     buttons[i].button_x = start_x
                     buttons[i].button_y = start_y
@@ -32,11 +34,13 @@ function ui()
                 buttons[#buttons].button_x = start_x
                 buttons[#buttons].button_y = start_y
             else
+                start_x = start_x+gapWidth
                 for i = 1, #buttons-1 do
                     buttons[i].button_x = start_x
                     buttons[i].button_y = start_y
                     start_x = start_x + width + gapWidth
                 end
+                start_x = start_x+gapWidth
                 buttons[#buttons].button_x = start_x
                 buttons[#buttons].button_y = start_y
 

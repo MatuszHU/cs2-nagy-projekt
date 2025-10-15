@@ -64,7 +64,7 @@ function DifficultySelectorView()
             uiHandler:drawButtonsInLine(
                 ilm.EQ_SP,
                 100,
-                (love.graphics.getHeight()/2)-(button.DEFAULT_HEIGHT/2),
+                (love.graphics.getHeight()-(love.graphics.getHeight()/10))-(button.DEFAULT_HEIGHT/2),
                 love.graphics.getWidth()-100,
                 button.DEFAULT_WIDTH, 
                 self.buttons.easy,
