@@ -3,7 +3,6 @@ local love = require "love"
 local Button = require "Button"
 local settingsView = require "SettingsView"
 local font = require "util/fonts"
-
 local character = require "character"
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
@@ -15,8 +14,7 @@ local game = {
     }
 }
 local settings = settingsView()
-
-local hero = createCharater("En","orc","knight")
+local hero = character("En","orc","knight", 5)
 
 local buttons = {
     menu = {}
@@ -97,6 +95,15 @@ function love.draw()
         if settings.cornerInfoDisplayed then
             love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()).." cornerInfoDisplayed: "..tostring(settings.cornerInfoDisplayed), font.debug.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
         end
+
+        -- TODO: Remove placeholder
+        if hero then
+            local margin = 500
+            local x = love.graphics.getWidth() - margin
+            local y = 210
+            hero:draw(x, y)
+        end
+
     end
         
 --debug

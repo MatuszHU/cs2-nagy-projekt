@@ -1,6 +1,6 @@
 return {
     orc = {
-        name = "Orc",
+        name = "orc",
         stats = {
             hp = 22,
             attack = 25,
@@ -12,11 +12,10 @@ return {
             luck = 1,
             fow = 1,
             movement = 3
-        },
-        image = ""
+        }
     },
     elf = {
-        name = "Elf",
+        name = "elf",
         stats = {
             hp = 12,
             attack = 10,
@@ -28,11 +27,10 @@ return {
             luck = 3,
             fow = 4,
             movement = 7
-        },
-        image = ""
+        }
     },
     goblin = {
-        name = "Goblin",
+        name = "goblin",
         stats = {
             hp = 5,
             attack = 3,
@@ -44,11 +42,10 @@ return {
             luck = 7,
             fow = 2,
             movement = 7
-        },
-        image = ""
+        }
     },
     human = {
-        name = "Human",
+        name = "human",
         stats = {
             hp = 10,
             attack = 10,
@@ -60,11 +57,10 @@ return {
             luck = 2,
             fow = 4,
             movement = 5
-        },
-        image = ""
+        }
     },
     dwarf = {
-        name = "Dwarf",
+        name = "dwarf",
         stats = {
             hp = 15,
             attack = 25,
@@ -76,7 +72,6 @@ return {
             luck = 2,
             fow = 2,
             movement = 3
-        },
-        image = ""
+        }
     }
 }

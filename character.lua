@@ -1,23 +1,36 @@
 local races = require "race"
 local classes = require "class"
+local SpriteManager = require "util/spriteManager"
 
-local Character = {}
+local function Character(name, raceKey, classKey, spriteIndex)
+    local self = {}
 
-function createCharater(name, race, class)
-    local race = races[race]
-    local class = classes[class]
+    local race = races[raceKey]
+    local class = classes[classKey]
 
-    local stats = {}
-    for k,v in pairs(race.stats) do
-        stats[k] = v + (class.stats[k] or 0)
+    self.name = name or "Hero"
+    self.race = race.name
+    self.class = class.name
+
+    self.stats = {}
+    for k, v in pairs(race.stats) do
+        self.stats[k] = v + (class.stats[k] or 0)
     end
 
-    return {
-        name = name or "Hero",
-        race = race.name,
-        class = class.name,
-        stats = stats
-    }
+    self.spriteManager = SpriteManager()
+
+    -- TODO: Remove nil
+    function self:loadSprite(selectedIndex)
+        self.spriteManager:loadSprite(self.race, nil, selectedIndex or 1, 20)
+    end
+
+    function self:draw(x, y)
+        self.spriteManager:draw(self.spriteManager.sheet, x, y)
+    end
+
+    self:loadSprite(spriteIndex)
+
+    return self
 end
 
 return Character
