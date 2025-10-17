@@ -105,7 +105,16 @@
 7. __Felülettervek__
    * Főmenü
      * ![Főmenü](./Képek/MainMenu.png)
-
+   * Toborzó képernyő
+     * ![Főmenü](./Képek/Recruiting.png)
+   * Kapu képernyő
+     * ![Főmenü](./Képek/Gate.png)
+   * Tábor képernyő
+     * ![Főmenü](./Képek/Camp.png)
+   * Nehézségi szint választó
+     * ![Főmenü](./Képek/Difficulty.png)
+   * Játék vége képernyő
+     * ![Főmenü](./Képek/End.png)
 8. __Architektúrális terv__
    * Backend:
      * A backend egy Lua keretrendszerrel, nevezetesen a Löve 2D-vel lesz megvalósítva
