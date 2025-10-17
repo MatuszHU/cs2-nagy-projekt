@@ -14,7 +14,7 @@ local game = {
     }
 }
 local settings = settingsView()
-local hero = character("En","orc","knight", 2)
+local hero = character("En","elf","priest", 3)
 
 local buttons = {
     menu = {}
@@ -64,7 +64,7 @@ function love.load()
     buttons.menu.exit = Button("Exit",love.event.quit, nil, 100, 40)
     settings:loadButtons()
     hero:setStats()
-    hero:loadSprite(20)
+    hero:loadSprite(0)
 end
 
 function love.update(dt)

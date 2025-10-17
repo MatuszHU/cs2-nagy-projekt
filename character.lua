@@ -20,7 +20,7 @@ local function Character(name, raceKey, classKey, spriteIndex)
         loadSprite = function(self, offsetX)
             self.spriteIndex = spriteIndex or self.spriteIndex
             self.offsetX = offsetX or self.offsetX
-            self.spriteManager:loadSprite(self.race.name, nil, self.spriteIndex, self.offsetX)
+            self.spriteManager:loadSprite(self.race.name, self.class.name, self.spriteIndex, self.offsetX)
         end,
         draw = function(self, x, y)
             self.spriteManager:draw(self.spriteManager.sheet, x, y)
