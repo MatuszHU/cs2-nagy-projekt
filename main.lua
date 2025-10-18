@@ -14,7 +14,8 @@ local game = {
     }
 }
 local settings = settingsView()
-local hero = character("En","elf","priest", 3)
+local hero = character("En","goblin","cavalry", 3)
+local hero2 = character("En2","orc","priest", 3)
 
 local buttons = {
     menu = {}
@@ -65,6 +66,8 @@ function love.load()
     settings:loadButtons()
     hero:setStats()
     hero:loadSprite(0)
+    hero2:setStats()
+    hero2:loadSprite(0)
 end
 
 function love.update(dt)
@@ -99,7 +102,7 @@ function love.draw()
         end
 
         -- TODO: Remove placeholder
-        if hero then
+        if hero and hero2 then
             local margin = 500
             local x = love.graphics.getWidth() - margin
             local y = 210
