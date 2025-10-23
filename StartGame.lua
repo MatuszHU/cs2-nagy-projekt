@@ -1,4 +1,4 @@
-local font = require "util/fonts"
+local font = require "util.fonts"
 
 local StartGame = {}
 local timer = 0

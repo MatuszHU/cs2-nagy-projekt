@@ -1,8 +1,8 @@
 local love = require "love"
 local Button = require "Button"
-local ui = require "util/ui"
-local ilm = require "enums/inLineMode"
-local button = require "enums/button"
+local ui = require "util.ui"
+local ilm = require "enums.inLineMode"
+local button = require "enums.button"
 
 uiHandler = ui()
 

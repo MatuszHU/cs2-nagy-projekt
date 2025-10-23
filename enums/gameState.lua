@@ -1,9 +1,12 @@
 local love = require "love"
 
 local gameState = {
-    STARTUP = "startUp",
-    MENU = "menu",
-    DIFFSELECT = "diffSelect",
-    PAUSED = "paused",
-    RUNNING = "running"
+    STARTUP = "STARTUP",
+    MENU = "MENU",
+    DIFFSELECT = "DIFFSELECT",
+    PAUSED = "PAUSED",
+    RUNNING = "RUNNING",
+    ENDGAME = "ENDGAME"
 }
+
+return gameState

@@ -1,12 +1,13 @@
 local love = require "love"
-local gameState = require "enums/gameState"
+local gameState = require "enums.gameState"
+local game = "enums.game"
 
 local function changeGameState(state)
-    game.state["startUp"] = state == gameState.STARTUP
-    game.state["menu"] = state == gameState.MENU
-    game.state["diffSelect"] = state == gameState.DIFFSELECT
-    game.state["paused"] = state == gameState.PAUSED
-    game.state["running"] = state == gameState.RUNNING
+    game.STARTUP = state == gameState.STARTUP
+    game.MENU = state == gameState.MENU
+    game.DIFFSELECT = state == gameState.DIFFSELECT
+    game.PAUSED = state == gameState.PAUSED
+    game.RUNNING = state == gameState.RUNNING
 end
 
-return changeGameState(state)
+return changeGameState
