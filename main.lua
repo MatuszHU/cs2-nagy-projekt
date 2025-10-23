@@ -6,12 +6,13 @@ local font = require "util/fonts"
 local StartGame = require "StartGame"
 local character = require "character"
 local DifficultySelector = require "DifficultySelectorView"
+local changeGameState = require "util/changeGameState"
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok
     state = {
-        startUp = true,
-        menu = false,
+        startUp = false,
+        menu = true,
         paused = false,
         running = false,
         diffSelect = false
@@ -21,16 +22,12 @@ local settings = settingsView()
 local diffSelect = DifficultySelector()
 local hero = createCharater("En","orc","knight")
 
+changeGameState(state)
+
 local buttons = {
     menu = {}
 }
-local function changeGameState(state)
-    game.state["startUp"] = state == "startUp"
-    game.state["menu"] = state == "menu"
-    game.state["diffSelect"] = state == "diffSelect"
-    game.state["paused"] = state == "paused"
-    game.state["running"] = state == "running"
-end
+
 local mouse = {
     radius = 20,
     x = 30,

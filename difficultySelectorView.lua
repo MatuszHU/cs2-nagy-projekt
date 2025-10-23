@@ -46,9 +46,9 @@ function DifficultySelectorView()
         end,
 
         loadButtons = function(self)
-            self.buttons.easy = Button("Könnyű", function() self:setDifficulty(self.difficulties.easy) end, nil, 105, 36)
-            self.buttons.medium = Button("Közepes", function() self:setDifficulty(self.difficulties.medium) end, nil, 105, 36)
-            self.buttons.hard = Button("Nehéz", function() self:setDifficulty(self.difficulties.hard) end, nil, 105, 36)
+            self.buttons.easy = Button("Easy", function() self:setDifficulty(self.difficulties.easy) end, nil, 105, 36)
+            self.buttons.medium = Button("Medium", function() self:setDifficulty(self.difficulties.medium) end, nil, 105, 36)
+            self.buttons.hard = Button("Hard", function() self:setDifficulty(self.difficulties.hard) end, nil, 105, 36)
         end,
 
         draw = function(self, pos_x, pos_y)
