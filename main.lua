@@ -16,6 +16,8 @@ local game = {
 local settings = settingsView()
 local hero = character("En","goblin","cavalry", 3)
 local hero2 = character("En2","orc","priest", 3)
+-- Maps
+local GridManager = require "util/gridManager"
 
 local buttons = {
     menu = {}
@@ -24,12 +26,31 @@ local function changeGameState(state)
     game.state["menu"] = state == "menu"
     game.state["paused"] = state == "paused"
     game.state["running"] = state == "running"
+        print(string.format("[DEBUG] game.state changed to '%s' (menu=%s, paused=%s, running=%s)",
+        state,
+        tostring(game.state["menu"]),
+        tostring(game.state["paused"]),
+        tostring(game.state["running"])
+    ))
 end
 local mouse = {
     radius = 20,
     x = 30,
     y = 30
 }
+
+grid = nil
+
+function loadMap(mapName)
+    print("[DEBUG] Loading map:", mapName)
+    local screenW, screenH = love.graphics.getDimensions()
+    grid = GridManager:new("assets.maps." .. mapName .. "Meta", "assets/maps/" .. mapName .. ".png", screenW, screenH)
+    print("[DEBUG] Map loaded successfully.")
+    changeGameState("running")
+    print("[DEBUG] Changed game state to running.")
+    local test = love.graphics.newImage("assets/maps/ForestCamp.png")
+    print(test:getWidth(), test:getHeight())
+end
 
 function love.mousepressed(x,y,button,touch,presses)
     if settings.displayed then
@@ -42,12 +63,19 @@ function love.mousepressed(x,y,button,touch,presses)
             if game.state["menu"] then
                 for index in pairs(buttons.menu) do
                     buttons.menu[index]:pressed(x,y, mouse.radius)
-                end 
+                end
             elseif game.state["ended"] then
                 for index in pairs(buttons.ended) do
                     buttons.ended[index]:pressed(x,y, mouse.radius)
-                end 
+                end
             end
+        end
+    end
+    if game.state["running"] and grid and button == 1 then
+        local gx, gy = grid:screenToGrid(x, y)
+        if gx and gy then
+            grid.selectedCell = { x = gx, y = gy }
+            grid:onCellClicked(gx, gy)
         end
     end
 end
@@ -57,22 +85,21 @@ function love.load()
     love.window.setFullscreen(true)
     background = love.graphics.newImage("assets/backgrounds/medievalBG.jpg")
     --settings = settingsView()
-   
+
     love.window.setTitle("CS2 Nagy Projekt")
-    buttons.menu.play = Button("Start", nil, nil, 150, 40)
+    buttons.menu.play = Button("Start", loadMap, "ForestCamp", 150, 40)
     buttons.menu.continue = Button("Continue", nil, nil, 150, 40)
     buttons.menu.setting = Button("Settings", function() settings:changeDisplay() end, nil, 150, 40)
     buttons.menu.exit = Button("Exit",love.event.quit, nil, 100, 40)
     settings:loadButtons()
-    hero:setStats()
-    hero:loadSprite(0)
-    hero2:setStats()
-    hero2:loadSprite(0)
+    -- hero:setStats()
+    -- hero:loadSprite(0)
+    -- hero2:setStats()
+    -- hero2:loadSprite(0)
 end
 
 function love.update(dt)
     mouse.x, mouse.y = love.mouse.getPosition()
-    
 end
 
 function love.draw()
@@ -96,7 +123,7 @@ function love.draw()
         if settings.displayed then
             settings:draw(30,30)
         end
-        
+
         if settings.cornerInfoDisplayed then
             love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()).." cornerInfoDisplayed: "..tostring(settings.cornerInfoDisplayed), font.debug.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
         end
@@ -109,8 +136,16 @@ function love.draw()
             hero:draw(x, y)
         end
 
+    elseif game.state["running"] then
+        grid:draw()
     end
-        
+
 --debug
-    
+
+end
+
+function love.keypressed(key)
+    if key == "escape" then
+        love.event.quit()
+    end
 end
