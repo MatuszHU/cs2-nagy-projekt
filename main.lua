@@ -4,7 +4,7 @@ local Button = require "Button"
 local settingsView = require "SettingsView"
 local font = require "util/fonts"
 local character = require "character"
-local CharacterManager = require "characterManager"
+local CharacterManager = require "util/characterManager"
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok
@@ -76,16 +76,21 @@ function love.mousepressed(x,y,button,touch,presses)
             end
         end
     end
-    if game.state["running"] and grid and button == 1 then
-        local gx, gy = grid:screenToGrid(x, y)
-        if gx and gy then
-            grid.selectedCell = { x = gx, y = gy }
-            grid:onCellClicked(gx, gy)
-        end
-        if not characters.selectedCharacter then
-            characters:selectAt(gridX, gridY)
-        else
-            characters:moveSelectedTo(gridX, gridY)
+    if game.state["running"] and grid then
+        if button == 1 then
+            local gx, gy = grid:screenToGrid(x, y)
+            if gx and gy then
+                grid.selectedCell = { x = gx, y = gy }
+                grid:onCellClicked(gx, gy)
+            end
+            if not characters.selectedCharacter then
+                characters:selectAt(gx, gy)
+            else
+                characters:moveSelectedTo(gx, gy)
+            end
+        elseif button == 2 then
+            characters.selectedCharacter = nil
+            grid.highlightedCells = nil
         end
     end
 end
@@ -151,6 +156,7 @@ function love.draw()
 
     elseif game.state["running"] then
         grid:draw()
+        characters:highlightReachable()
         characters:draw()
     end
 

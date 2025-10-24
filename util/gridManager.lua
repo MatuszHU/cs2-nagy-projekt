@@ -76,14 +76,22 @@ function GridManager:draw()
     love.graphics.setColor(1, 1, 1)
 
     if self.selectedCell then
-        local x, y = self:gridToScreen(self.selectedCell.x, self.selectedCell.y)
+        self:highlightCells({self.selectedCell}, 1, 0, 0, 0.4)
+    end
+end
+
+function GridManager:highlightCells(cells, r, g, b, a)
+    if not cells then return end
+    r, g, b, a = r or 0, g or 1, b or 0, a or 0.3  -- default: green semi-transparent
+
+    love.graphics.setColor(r, g, b, a)
+    for _, cell in ipairs(cells) do
+        local x, y = self:gridToScreen(cell.x, cell.y)
         local scaledCellW = self.cellW * self.scale
         local scaledCellH = self.cellH * self.scale
-
-        love.graphics.setColor(1, 0, 0, 0.4) -- red, semi-transparent
         love.graphics.rectangle("fill", x, y, scaledCellW, scaledCellH)
-        love.graphics.setColor(1, 1, 1, 1) -- reset color
     end
+    love.graphics.setColor(1, 1, 1, 1) -- reset
 end
 
 function GridManager:screenToGrid(mx, my)

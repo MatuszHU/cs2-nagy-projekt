@@ -1,5 +1,5 @@
 -- characterManager.lua
-local Character = require "character"
+local Character = require "../character"
 
 local CharacterManager = {}
 CharacterManager.__index = CharacterManager
@@ -15,6 +15,7 @@ end
 function CharacterManager:addCharacter(name, race, class, spriteIndex, gridX, gridY)
     local char = Character(name, race, class, spriteIndex, gridX, gridY)
     char:loadSprite()
+    char:setStats()
     -- dynamically calculate scale based on sprite size
     local cw, ch = self.gridManager.cellW, self.gridManager.cellH
     local sw = char.spriteManager.sheetWidth
@@ -40,9 +41,46 @@ function CharacterManager:selectAt(gridX, gridY)
 end
 
 function CharacterManager:moveSelectedTo(gridX, gridY)
-    if self.selectedCharacter then
-        self.selectedCharacter:moveTo(gridX, gridY)
+    if not self.selectedCharacter then return end
+
+    local reachable = self:getReachableCells(self.selectedCharacter)
+
+    for _, cell in ipairs(reachable) do
+        if cell.x == gridX and cell.y == gridY then
+            self.selectedCharacter:moveTo(gridX, gridY)
+            return
+        end
     end
+    print("Cannot move there, out of range!")
+end
+
+function CharacterManager:getReachableCells(character)
+    local reachable = {}
+    local maxMove = character.stats.movement or 0
+    local startX, startY = character.gridX, character.gridY
+
+    local cols = self.gridManager.cols
+    local rows = self.gridManager.rows
+
+    for dx = -maxMove, maxMove do
+        for dy = -maxMove, maxMove do
+            local x = startX + dx
+            local y = startY + dy
+            local distance = math.abs(dx) + math.abs(dy)
+
+            if distance <= maxMove and x >= 0 and x < cols and y >= 0 and y < rows then
+                table.insert(reachable, {x = x, y = y})
+            end
+        end
+    end
+
+    return reachable
+end
+
+function CharacterManager:highlightReachable()
+    if not self.selectedCharacter then return end
+    local cells = self:getReachableCells(self.selectedCharacter)
+    self.gridManager:highlightCells(cells, 0, 1, 0, 0.3) -- green highlight
 end
 
 function CharacterManager:update(dt)

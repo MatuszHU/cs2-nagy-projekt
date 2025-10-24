@@ -29,9 +29,9 @@ local function Character(name, raceKey, classKey, spriteIndex, gridX, gridY)
             scaleY = scaleY or 1
             self.spriteManager:draw(self.spriteManager.sheet, x, y, scaleX, scaleY)
         end,
-        moveTo = function(newGridX, newGridY)
-            self.gridX = newGridX
-            self.gridY = newGridY
+        moveTo = function(self, newGridX, newGridY)
+            self.gridX = newGridX or self.gridX
+            self.gridY = newGridY or self.gridY
         end,
 
     }
