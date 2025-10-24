@@ -86,9 +86,6 @@ function GridManager:draw()
     end
 end
 
-----------------------------------------------------------------------
--- 🖱️ Convert screen coordinates → grid cell
-----------------------------------------------------------------------
 function GridManager:screenToGrid(mx, my)
     local scaledCellW = self.cellW * self.scale
     local scaledCellH = self.cellH * self.scale
@@ -103,9 +100,6 @@ function GridManager:screenToGrid(mx, my)
     return gx, gy
 end
 
-----------------------------------------------------------------------
--- 📍 Convert grid cell → screen pixel coordinates
-----------------------------------------------------------------------
 function GridManager:gridToScreen(gx, gy)
     local scaledCellW = self.cellW * self.scale
     local scaledCellH = self.cellH * self.scale
