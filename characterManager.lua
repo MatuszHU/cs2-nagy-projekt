@@ -23,17 +23,9 @@ function CharacterManager:addCharacter(name, race, class, spriteIndex, gridX, gr
         x = cw / (sw/3),
         y = ch / (sh/2)
     }
-    self:alignToGridCenter(char)
     table.insert(self.characters, char)
     return char
 end
-
-function CharacterManager:alignToGridCenter(char)
-    local cw, ch = self.gridManager.cellW, self.gridManager.cellH
-    local sw = char.spriteManager.sheetWidth
-    local sh = char.spriteManager.sheetHeight
-end
-
 
 function CharacterManager:selectAt(gridX, gridY)
     for _, char in ipairs(self.characters) do
