@@ -58,13 +58,14 @@ function SpriteManager()
             self.sheet = spriteCache[self.path]
             self.selectedIndex = math.max(1, math.min(#self.quads, selectedIndex or 1))
         end,
-        draw = function(self, sprite, x, y)
+        draw = function(self, sprite, x, y, scaleX, scaleY)
             self.x = x or self.x
             self.y = y or self.y
-            local scale = 1
+            self.scaleX = scaleX or 1
+            self.scaleY = scaleY or 1
 
             if sprite and sprite.image and sprite.quads and sprite.quads[self.selectedIndex] then
-                love.graphics.draw(sprite.image, sprite.quads[self.selectedIndex], self.x, self.y, 0, scale, scale)
+                love.graphics.draw(sprite.image, sprite.quads[self.selectedIndex], self.x, self.y, 0, self.scaleX, self.scaleY)
             else
                 love.graphics.print("No sprite!", x, y)
             end

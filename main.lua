@@ -4,6 +4,7 @@ local Button = require "Button"
 local settingsView = require "SettingsView"
 local font = require "util/fonts"
 local character = require "character"
+local CharacterManager = require "characterManager"
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok
@@ -40,12 +41,16 @@ local mouse = {
 }
 
 grid = nil
+charaters = nil
 
 function loadMap(mapName)
     print("[DEBUG] Loading map:", mapName)
     local screenW, screenH = love.graphics.getDimensions()
     grid = GridManager:new("assets.maps." .. mapName .. "Meta", "assets/maps/" .. mapName .. ".png", screenW, screenH)
     print("[DEBUG] Map loaded successfully.")
+    characters = CharacterManager:new(grid)
+    print("[DEBUG] Characters initialized successfully.")
+    characters:addCharacter("En2","orc","priest", 3, 6,6)
     changeGameState("running")
     print("[DEBUG] Changed game state to running.")
     local test = love.graphics.newImage("assets/maps/ForestCamp.png")
@@ -77,6 +82,11 @@ function love.mousepressed(x,y,button,touch,presses)
             grid.selectedCell = { x = gx, y = gy }
             grid:onCellClicked(gx, gy)
         end
+        if not characters.selectedCharacter then
+            characters:selectAt(gridX, gridY)
+        else
+            characters:moveSelectedTo(gridX, gridY)
+        end
     end
 end
 
@@ -100,6 +110,9 @@ end
 
 function love.update(dt)
     mouse.x, mouse.y = love.mouse.getPosition()
+    if characters then
+        characters:update(dt)
+    end
 end
 
 function love.draw()
@@ -138,6 +151,7 @@ function love.draw()
 
     elseif game.state["running"] then
         grid:draw()
+        characters:draw()
     end
 
 --debug
