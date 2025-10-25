@@ -5,6 +5,8 @@ local settingsView = require "SettingsView"
 local font = require "util/fonts"
 local character = require "character"
 local CharacterManager = require "util/characterManager"
+local GridManager = require "util/gridManager"
+local NameManager = require "util/nameManager"
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok
@@ -16,7 +18,8 @@ local game = {
 }
 local settings = settingsView()
 local hero = character("En","goblin","cavalry", 3)
-local GridManager = require "util/gridManager"
+local NameManager = NameManager()
+
 
 local buttons = {
     menu = {}
