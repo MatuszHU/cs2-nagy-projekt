@@ -8,14 +8,14 @@ function GridManager:new(mapMetaPath, mapImagePath, screenW, screenH)
     local self = setmetatable({}, GridManager)
     self.meta = meta
     self.image = image
-
+    
     self.cols = meta.grid_dims.cols
     self.rows = meta.grid_dims.rows
     self.cellW = meta.cell.w
     self.cellH = meta.cell.h
     self.gridStartX = meta.grid_offset.x
     self.gridStartY = meta.grid_offset.y
-
+    
     local imgW, imgH = image:getDimensions()
     local imgRatio = imgW / imgH
     local screenRatio = screenW / screenH
@@ -93,6 +93,7 @@ function GridManager:highlightCells(cells, r, g, b, a)
     end
     love.graphics.setColor(1, 1, 1, 1) -- reset
 end
+
 
 function GridManager:screenToGrid(mx, my)
     local scaledCellW = self.cellW * self.scale

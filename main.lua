@@ -16,8 +16,6 @@ local game = {
 }
 local settings = settingsView()
 local hero = character("En","goblin","cavalry", 3)
-local hero2 = character("En2","orc","priest", 3)
--- Maps
 local GridManager = require "util/gridManager"
 
 local buttons = {
@@ -50,7 +48,7 @@ function loadMap(mapName)
     print("[DEBUG] Map loaded successfully.")
     characters = CharacterManager:new(grid)
     print("[DEBUG] Characters initialized successfully.")
-    characters:addCharacter("En2","orc","priest", 3, 5,5)
+    characters:addCharacter("En2","goblin","thief", 2, 5,5)
     changeGameState("running")
     print("[DEBUG] Changed game state to running.")
     local test = love.graphics.newImage("assets/maps/ForestCamp.png")
@@ -107,10 +105,6 @@ function love.load()
     buttons.menu.setting = Button("Settings", function() settings:changeDisplay() end, nil, 150, 40)
     buttons.menu.exit = Button("Exit",love.event.quit, nil, 100, 40)
     settings:loadButtons()
-    -- hero:setStats()
-    -- hero:loadSprite(0)
-    -- hero2:setStats()
-    -- hero2:loadSprite(0)
 end
 
 function love.update(dt)
@@ -158,6 +152,8 @@ function love.draw()
         grid:draw()
         characters:highlightReachable()
         characters:draw()
+
+        
     end
 
 --debug
