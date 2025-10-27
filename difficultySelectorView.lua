@@ -38,7 +38,6 @@ function DifficultySelectorView()
 
         setDifficulty = function (self, diff)
             self.selected = diff
-            
         end,
 
         changeDisplay = function(self)

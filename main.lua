@@ -98,8 +98,6 @@ function love.draw()
         if settings.displayed then
             settings:draw(30,30)
         end
-        
-        
     end
     if game.DIFFSELECT then
         diffSelect:draw()
