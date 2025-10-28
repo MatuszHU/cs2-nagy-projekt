@@ -17,6 +17,7 @@ local game = {
     }
 }
 local settings = settingsView()
+local names = NameManager()
 
 
 local buttons = {
@@ -41,17 +42,15 @@ local mouse = {
 
 grid = nil
 characters = nil
-name = nil
 
 function loadMap(mapName)
     print("[DEBUG] Loading map:", mapName)
     local screenW, screenH = love.graphics.getDimensions()
     grid = GridManager:new("assets.maps." .. mapName .. "Meta", "assets/maps/" .. mapName .. ".png", screenW, screenH)
     print("[DEBUG] Map loaded successfully.")
-    name = NameManager()
     characters = CharacterManager:new(grid)
     print("[DEBUG] Characters initialized successfully.")
-    characters:addCharacter(name.getRandomName(),"elf","cavalry", 3, 5,5)
+    characters:addCharacter(names.getRandomName(),"elf","cavalry", 3, 5,5)
     changeGameState("running")
     print("[DEBUG] Changed game state to running.")
     local test = love.graphics.newImage("assets/maps/ForestCamp.png")
