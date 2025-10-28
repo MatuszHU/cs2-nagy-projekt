@@ -17,8 +17,6 @@ local game = {
     }
 }
 local settings = settingsView()
-local hero = character("En","goblin","cavalry", 3)
-local NameManager = NameManager()
 
 
 local buttons = {
@@ -28,11 +26,11 @@ local function changeGameState(state)
     game.state["menu"] = state == "menu"
     game.state["paused"] = state == "paused"
     game.state["running"] = state == "running"
-        print(string.format("[DEBUG] game.state changed to '%s' (menu=%s, paused=%s, running=%s)",
-        state,
-        tostring(game.state["menu"]),
-        tostring(game.state["paused"]),
-        tostring(game.state["running"])
+    print(string.format("[DEBUG] game.state changed to '%s' (menu=%s, paused=%s, running=%s)",
+    state,
+    tostring(game.state["menu"]),
+    tostring(game.state["paused"]),
+    tostring(game.state["running"])
     ))
 end
 local mouse = {
@@ -42,16 +40,18 @@ local mouse = {
 }
 
 grid = nil
-charaters = nil
+characters = nil
+name = nil
 
 function loadMap(mapName)
     print("[DEBUG] Loading map:", mapName)
     local screenW, screenH = love.graphics.getDimensions()
     grid = GridManager:new("assets.maps." .. mapName .. "Meta", "assets/maps/" .. mapName .. ".png", screenW, screenH)
     print("[DEBUG] Map loaded successfully.")
+    name = NameManager()
     characters = CharacterManager:new(grid)
     print("[DEBUG] Characters initialized successfully.")
-    characters:addCharacter("En2","goblin","thief", 2, 5,5)
+    characters:addCharacter(name.getRandomName(),"elf","cavalry", 3, 5,5)
     changeGameState("running")
     print("[DEBUG] Changed game state to running.")
     local test = love.graphics.newImage("assets/maps/ForestCamp.png")

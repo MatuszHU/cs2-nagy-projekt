@@ -1,4 +1,3 @@
--- characterManager.lua
 local Character = require "../character"
 
 local CharacterManager = {}
