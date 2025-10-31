@@ -81,6 +81,15 @@ function CharacterManager:highlightReachable()
     local cells = self:getReachableCells(self.selectedCharacter)
     self.gridManager:highlightCells(cells, 0, 1, 0, 0.3) -- green highlight
 end
+-- TODO: possible remove
+function CharacterManager:levelUpCharacters()
+    for _, char in ipairs(self.characters) do
+        char:levelUp()
+        for k, v in pairs(char.stats) do
+            print(string.format("%s : %d",k,v))
+        end
+    end
+end
 
 function CharacterManager:update(dt)
     for _, char in ipairs(self.characters) do

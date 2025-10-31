@@ -141,14 +141,7 @@ function love.draw()
         if settings.cornerInfoDisplayed then
             love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()).." cornerInfoDisplayed: "..tostring(settings.cornerInfoDisplayed), font.debug.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
         end
-
-        -- TODO: Remove placeholder
-        if hero and hero2 then
-            local margin = 500
-            local x = love.graphics.getWidth() - margin
-            local y = 210
-            hero:draw(x, y)
-        end
+        
 
     elseif game.state["running"] then
         grid:draw()
@@ -165,5 +158,9 @@ end
 function love.keypressed(key)
     if key == "escape" then
         love.event.quit()
+    end
+    -- TODO: possible remove
+    if key == "l" then
+        characters:levelUpCharacters()
     end
 end
