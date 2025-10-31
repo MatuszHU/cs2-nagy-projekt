@@ -17,6 +17,7 @@ local function Character(name, raceKey, classKey, spriteIndex, gridX, gridY)
             for k, v in pairs(self.race.stats) do
                 self.stats[k] = v + (self.class.stats[k] or 0)
             end
+            self.stats.max_hp = self.stats.hp
         end,
         spriteManager = SpriteManager(),
         loadSprite = function(self, offsetX)
