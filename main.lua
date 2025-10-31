@@ -19,7 +19,7 @@ local game = {
 local settings = settingsView()
 local names = NameManager()
 
-local game require("game") -- refaktorálni kell majd a maint, hogy amit lehet a game.lua-ból használjon.
+local game = require("game") -- refaktorálni kell majd a maint, hogy amit lehet a game.lua-ból használjon.
 
 local buttons = {
     menu = {}

@@ -31,6 +31,20 @@ function BattleManager:startBattle()
     print("Battle started! " .. self:getCurrentPlayer().name .. " goes first.")
 end
 
+function BattleManager:levelUpCharacters()
+    for _, char in ipairs(self.players[1].team) do
+        char:levelUp()
+        for k, v in pairs(char.stats) do
+            print(string.format("%s : %d",k,v))
+        end
+    end
+end
+
+function BattleManager:endBattle()
+    self:levelUpCharacters()
+    self:assignTeams(nil,nil)
+end
+
 function BattleManager:getCurrentPlayer()
     return self.players[self.currentPlayerIndex]
 end
