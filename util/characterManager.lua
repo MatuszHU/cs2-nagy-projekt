@@ -53,6 +53,17 @@ function CharacterManager:moveSelectedTo(gridX, gridY)
     print("Cannot move there, out of range!")
 end
 
+function CharacterManager:drawHP(char, x, y)
+    local hp, max = char.stats.hp, char.stats.max_hp
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.rectangle("fill", x, y - 8, 40, 5)
+    love.graphics.setColor(0, 1, 0)
+    love.graphics.rectangle("fill", x, y - 8, 40 * (hp / max), 5)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print(hp .. "/" .. max, x, y - 20)
+end
+
+
 function CharacterManager:getReachableCells(character)
     local reachable = {}
     local maxMove = character.stats.movement or 0
@@ -98,6 +109,7 @@ function CharacterManager:draw()
         local drawX = baseX + (char.offsetX or 0) * mapScale
         local drawY = baseY + (char.offsetY or 0) * mapScale
         char:draw(drawX, drawY, mapScale * char.scale.x, mapScale * char.scale.y)
+        self:drawHP(char, baseX, baseY)
     end
 end
 
