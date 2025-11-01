@@ -14,7 +14,7 @@ end
 function CharacterManager:addCharacter(name, race, class, spriteIndex, gridX, gridY)
     local char = Character(name, race, class, spriteIndex, gridX, gridY)
     char:loadSprite()
-    char:setStats()
+    char:setStats() 
 
     -- dynamically calculate scale based on sprite size
     local cw, ch = self.gridManager.cellW, self.gridManager.cellH
@@ -29,6 +29,7 @@ function CharacterManager:addCharacter(name, race, class, spriteIndex, gridX, gr
     table.insert(self.characters, char)
     return char
 end
+
 
 -- Utility: find character at grid position
 function CharacterManager:getCharacterAt(gridX, gridY)
@@ -74,6 +75,15 @@ function CharacterManager:getReachableCells(character)
     return reachable
 end
 
+function CharacterManager:highlightReachable(char)
+    self.reachableCells = self:getReachableCells(char)
+end
+
+function CharacterManager:clearHighlight()
+    self.reachableCells = nil
+end
+
+
 -- Draw HP bar above a character
 function CharacterManager:drawHP(char, x, y)
     local hp, max = char.stats.hp, char.stats.max_hp
@@ -95,6 +105,10 @@ end
 -- Main draw call for all characters
 function CharacterManager:draw()
     local mapScale = self.gridManager.scale
+
+    if self.reachableCells then
+        self.gridManager:highlightCells(self.reachableCells, 0, 1, 0, 0.3)
+    end
 
     for _, char in ipairs(self.characters) do
         local baseX, baseY = self.gridManager:gridToScreen(char.gridX, char.gridY)

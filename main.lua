@@ -4,9 +4,7 @@ local Button = require "Button"
 local settingsView = require "SettingsView"
 local font = require "util/fonts"
 local character = require "character"
-local CharacterManager = require "util/characterManager"
-local GridManager = require "util/gridManager"
-local NameManager = require "util/nameManager"
+local GameManager = require "game" -- refaktorálni kell majd a maint, hogy amit lehet a game.lua-ból használjon.
 --Minden globálisan érvényes érték itt legyen kezelve
 local game = {
     --Játék állapotok
@@ -17,9 +15,9 @@ local game = {
     }
 }
 local settings = settingsView()
-local names = NameManager()
 
-local game = require("game") -- refaktorálni kell majd a maint, hogy amit lehet a game.lua-ból használjon.
+local gameInstance = nil
+
 
 local buttons = {
     menu = {}
@@ -41,21 +39,9 @@ local mouse = {
     y = 30
 }
 
-grid = nil
-characters = nil
-
 function loadMap(mapName)
-    print("[DEBUG] Loading map:", mapName)
-    local screenW, screenH = love.graphics.getDimensions()
-    grid = GridManager:new("assets.maps." .. mapName .. "Meta", "assets/maps/" .. mapName .. ".png", screenW, screenH)
-    print("[DEBUG] Map loaded successfully.")
-    characters = CharacterManager:new(grid)
-    print("[DEBUG] Characters initialized successfully.")
-    characters:addCharacter(names.getRandomName(),"elf","cavalry", 3, 5,5)
+    gameInstance = GameManager:new()
     changeGameState("running")
-    print("[DEBUG] Changed game state to running.")
-    local test = love.graphics.newImage("assets/maps/ForestCamp.png")
-    print(test:getWidth(), test:getHeight())
 end
 
 function love.mousepressed(x,y,button,touch,presses)
@@ -77,22 +63,8 @@ function love.mousepressed(x,y,button,touch,presses)
             end
         end
     end
-    if game.state["running"] and grid then
-        if button == 1 then
-            local gx, gy = grid:screenToGrid(x, y)
-            if gx and gy then
-                grid.selectedCell = { x = gx, y = gy }
-                grid:onCellClicked(gx, gy)
-            end
-            if not characters.selectedCharacter then
-                characters:selectAt(gx, gy)
-            else
-                characters:moveSelectedTo(gx, gy)
-            end
-        elseif button == 2 then
-            characters.selectedCharacter = nil
-            grid.highlightedCells = nil
-        end
+    if game.state["running"] and gameInstance then
+        gameInstance:mousepressed(x, y, button)
     end
 end
 
@@ -112,8 +84,8 @@ end
 
 function love.update(dt)
     mouse.x, mouse.y = love.mouse.getPosition()
-    if characters then
-        characters:update(dt)
+    if game.state["running"] and gameInstance then
+        gameInstance:update(dt)
     end
 end
 
@@ -143,20 +115,8 @@ function love.draw()
             love.graphics.printf("FPS:"..love.timer.getFPS().." Platform: "..love.system.getOS().." Settings Display: "..tostring(settings.displayed).." Fullscreen Mode:"..tostring(love.window.getFullscreen()).." cornerInfoDisplayed: "..tostring(settings.cornerInfoDisplayed), font.debug.font,10,love.graphics.getHeight()-30,love.graphics.getWidth())
         end
 
-        -- TODO: Remove placeholder
-        if hero and hero2 then
-            local margin = 500
-            local x = love.graphics.getWidth() - margin
-            local y = 210
-            hero:draw(x, y)
-        end
-
-    elseif game.state["running"] then
-        grid:draw()
-        characters:highlightReachable()
-        characters:draw()
-
-        
+    elseif game.state["running"] and gameInstance then
+        gameInstance:draw()
     end
 
 --debug
@@ -166,5 +126,8 @@ end
 function love.keypressed(key)
     if key == "escape" then
         love.event.quit()
+    end
+    if gameInstance then
+        gameInstance:keypressed(key)
     end
 end

@@ -1,24 +1,32 @@
+-- util/battleManager.lua
 local BattleManager = {}
 BattleManager.__index = BattleManager
 
-local Phase = require("../enums.battlePhases")
+local Phase = require "../enums.battlePhases"
+local PlayerRoster = require "util.playerRoster"
+
 
 function BattleManager:new(characterManager)
     local self = setmetatable({}, BattleManager)
     self.characterManager = characterManager
     self.phase = Phase.IDLE
 
+    self.playerRoster = PlayerRoster:new(self.characterManager)
+
+
     self.players = {
-        { id = 1, name = "Player", team = {} },
+        { id = 1, name = "Player", team  = self.playerRoster:getTeam() },
         { id = 2, name = "AI", team = {} }
     }
 
     self.currentPlayerIndex = 1
     self.actedCharacters = {}
+    self.selectedCharacter = nil
+    self.isBattleOver = false
+    self.winner = nil
     return self
 end
 
--- Assign characters to teams before battle starts
 function BattleManager:assignTeams(playerTeam, aiTeam)
     self.players[1].team = playerTeam or {}
     self.players[2].team = aiTeam or {}
@@ -28,21 +36,53 @@ function BattleManager:startBattle()
     self.phase = Phase.SELECT
     self.currentPlayerIndex = 1
     self.actedCharacters = {}
+    self.selectedCharacter = nil
+    self.isBattleOver = false
+    self.winner = nil
     print("Battle started! " .. self:getCurrentPlayer().name .. " goes first.")
 end
 
 function BattleManager:levelUpCharacters()
-    for _, char in ipairs(self.players[1].team) do
+    for _, char in ipairs(self.playerRoster:getTeam()) do
         char:levelUp()
-        for k, v in pairs(char.stats) do
-            print(string.format("%s : %d",k,v))
-        end
     end
 end
 
 function BattleManager:endBattle()
-    self:levelUpCharacters()
-    self:assignTeams(nil,nil)
+    print("Ending battle...")
+
+    if self.winner == "Player" then
+        self:levelUpCharacters()
+    end
+
+    -- === Restore and reuse player roster ===
+    self.playerRoster:resetAfterBattle()
+
+    -- Remove all characters except your roster ones
+    local newList = {}
+    for _, c in ipairs(self.characterManager.characters) do
+        for _, pc in ipairs(self.playerRoster:getTeam()) do
+            if c == pc then
+                table.insert(newList, c)
+            else
+                self.playerRoster.nameManager:removeName(c.name)
+            end
+            
+        end
+    end
+    self.characterManager.characters = newList
+
+    local newAiTeam = {
+        self.characterManager:addCharacter(self.playerRoster.nameManager:getRandomName("orc","male"), "orc", "knight", 1, 8, 4),
+        self.characterManager:addCharacter(self.playerRoster.nameManager:getRandomName("orc","male"), "orc", "knight", 1, 9, 5)
+    }
+
+    -- Assign updated teams
+    self.characterManager:clearHighlight()
+    self:assignTeams(self.playerRoster:getTeam(), newAiTeam)
+
+    self:startBattle()
+    print("A new battle begins! Your roster returns to fight again!")
 end
 
 function BattleManager:getCurrentPlayer()
@@ -57,6 +97,10 @@ function BattleManager:isCharacterOnCurrentTeam(char)
 end
 
 function BattleManager:selectCharacter(char)
+    if char.isDefeated then
+        print("Cannot select defeated character!")
+        return false
+    end
     if not self:isCharacterOnCurrentTeam(char) then
         print("Cannot control enemy units!")
         return false
@@ -65,10 +109,13 @@ function BattleManager:selectCharacter(char)
         print(char.name .. " has already acted this turn.")
         return false
     end
-
+    
     self.selectedCharacter = char
     self.phase = Phase.MOVE
     print("Selected " .. char.name .. " to act.")
+    if self.characterManager then
+        self.characterManager:highlightReachable(char)
+    end
     return true
 end
 
@@ -81,6 +128,9 @@ function BattleManager:moveCharacter(gridX, gridY)
     for _, cell in ipairs(reachable) do
         if cell.x == gridX and cell.y == gridY then
             char:moveTo(gridX, gridY)
+            if self.characterManager then
+                self.characterManager:clearHighlight()
+            end
             self.phase = Phase.ATTACK
             print(char.name .. " moved to (" .. gridX .. "," .. gridY .. ")")
             return
@@ -110,21 +160,54 @@ function BattleManager:attack(target)
     self.selectedCharacter = nil
     self.phase = Phase.SELECT
 
+    if target.stats.hp <= 0 then
+        print(target.name .. " has been defeated.")
+        target.isDefeated = true
+    end
+
+    -- Check victory
+    local playerAlive = false
+    for _, c in ipairs(self.players[1].team) do
+        if not c.isDefeated then
+            playerAlive = true
+            break
+        end
+    end
+
+    local aiAlive = false
+    for _, c in ipairs(self.players[2].team) do
+        if not c.isDefeated then
+            aiAlive = true
+            break
+        end
+    end
+
+    if not playerAlive or not aiAlive then
+        local winner = playerAlive and self.players[1].name or self.players[2].name
+        print("Battle over! " .. winner .. " wins!")
+
+        self.winner = winner
+        self.isBattleOver = true
+        self.phase = Phase.IDLE
+        return
+    end
+
     if self:checkEndOfTurn() then
         self:endTurn()
     end
 end
 
 function BattleManager:calculateDamage(attacker, target)
-    local atk = attacker.stats.attack or 0
-    local def = target.stats.defense or 0
-    return atk-def
+    local atk = (attacker.stats and attacker.stats.attack) or 0
+    local def = (target.stats and target.stats.defense) or 0
+    local dmg = atk - def
+    return math.max(0, dmg)
 end
 
 function BattleManager:checkEndOfTurn()
     local allActed = true
     for _, char in ipairs(self:getCurrentPlayer().team) do
-        if not self.actedCharacters[char] and char.stats.hp > 0 then
+        if (not self.actedCharacters[char]) and (not char.isDefeated) then
             allActed = false
             break
         end
@@ -136,7 +219,6 @@ function BattleManager:endTurn()
     print(self:getCurrentPlayer().name .. "'s turn ended.")
     self.phase = Phase.END_TURN
 
-    -- switch player
     self.currentPlayerIndex = (self.currentPlayerIndex % #self.players) + 1
     self.actedCharacters = {}
     self.phase = Phase.SELECT
@@ -144,11 +226,10 @@ function BattleManager:endTurn()
 end
 
 function BattleManager:update(dt)
-    -- in future: handle AI logic, animations, etc.
+    -- Future: AI logic
 end
 
 function BattleManager:draw()
-    -- optional: draw highlights, turn indicators, etc.
 end
 
 return BattleManager
