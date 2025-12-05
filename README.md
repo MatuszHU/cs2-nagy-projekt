@@ -1,4 +1,4 @@
-# Fantasy Yoga Club | Csapat 2 Projekt | Szoftverfejlesztési módeszertanok
+# Fantasy Y Club | Csapat 2 Projekt | Szoftverfejlesztési módeszertanok
 ## Megjegyzés: Projekt neve szigorúan belső használatra és azonosításra készült, nem reprezentálja a játékmenetet, funkcióit és/vagy grafikát
 ---
 
